@@ -15,3 +15,5 @@ create table dadjokes.jokes
 
 alter table dadjokes.jokes
     owner to dad;
+
+insert into dadjokes.jokes values (1, "What does a baby computer call his father?", "Data")
