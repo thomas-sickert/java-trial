@@ -1,6 +1,7 @@
 package com.github.dadjokes;
 
 import com.github.dadjokes.model.DadJoke;
+import javassist.NotFoundException;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,11 @@ public class DadJokeService {
         this.dadJokeRepository = dadJokeRepository;
     }
 
-    public DadJoke getDadJoke(Long id) {
-        return mapper.map(dadJokeRepository.getById(id), DadJoke.class);
+    public DadJoke getDadJoke(Long id) throws NotFoundException {
+        DadJokeEntity dadJokeEntity = dadJokeRepository.getById(id);
+        if (dadJokeEntity == null) {
+            throw new NotFoundException("Could not find dad joke with ID " + id);
+        }
+        return mapper.map(dadJokeEntity, DadJoke.class);
     }
 }

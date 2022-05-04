@@ -2,6 +2,8 @@ package com.github.dadjokes;
 
 import com.github.dadjokes.api.JokesApi;
 import com.github.dadjokes.model.DadJoke;
+import javassist.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -16,6 +18,10 @@ public class DadJokesController implements JokesApi {
 
     @Override
     public ResponseEntity<DadJoke> getDadJoke(Long id) {
-        return ResponseEntity.ok(dadJokeService.getDadJoke(id));
+        try {
+            return ResponseEntity.ok(dadJokeService.getDadJoke(id));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
