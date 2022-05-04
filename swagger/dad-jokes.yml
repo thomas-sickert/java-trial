@@ -48,6 +48,9 @@ definitions:
 
   DadJoke:
     type: object
+    required:
+      - question
+      - answer
     properties:
       id:
         type: integer
