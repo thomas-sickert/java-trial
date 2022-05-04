@@ -12,3 +12,7 @@ postgres:
   database: dadjokes
   username: dad
   password: jokes
+
+server:
+  servlet:
+    context-path: /dad
