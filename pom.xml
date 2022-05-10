@@ -8,15 +8,29 @@
 		<version>2.5.13</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>spring-boot</artifactId>
+	<groupId>com.github</groupId>
+	<artifactId>dadjokes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot</name>
-	<description>Demo project for Spring Boot</description>
+	<name>dadjokes</name>
+	<description>The API we needed, but not the one we deserve.</description>
 	<properties>
 		<java.version>11</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<spring.fox.version>3.0.0</spring.fox.version>
+		<postgres.version>42.3.4</postgres.version>
+		<apache.tomcat.version>10.1.0-M14</apache.tomcat.version>
+		<dozer.version>5.5.1</dozer.version>
+		<javax.validation.version>2.0.1.Final</javax.validation.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-releasetrain</artifactId>
+			<version>Dijkstra-SR3</version>
+			<type>pom</type>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -29,9 +43,56 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${spring.fox.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${spring.fox.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgres.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${javax.validation.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
+			<version>${apache.tomcat.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>${dozer.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -39,6 +100,29 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-codegen-maven-plugin</artifactId>
+				<version>2.2.3</version>
+				<configuration>
+					<apiPackage>com.github.dadjokes.api</apiPackage>
+					<modelPackage>com.github.dadjokes.model</modelPackage>
+					<configOptions>
+						<serializableModel>true</serializableModel>
+						<interfaceOnly>true</interfaceOnly>
+					</configOptions>
+					<inputSpec>swagger/dad-jokes.yml</inputSpec>
+					<language>spring</language>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<id>dadJokesApi</id>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
